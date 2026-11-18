@@ -1,0 +1,27 @@
+name: CI do portfólio
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validar-html:
+    name: Validar HTML
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v6
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Validar index.html
+        run: npm exec --yes --package=html-validate@9 -- html-validate index.html
